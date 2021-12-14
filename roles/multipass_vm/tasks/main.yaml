@@ -2,17 +2,6 @@
   shell: "multipass version"
   changed_when: no
 
-- name: Create keypair dir
-  file:
-    path: "{{ multipass_build_dir }}"
-    state: directory
-
-- name: Generate keypair
-  community.crypto.openssh_keypair:
-    path: "{{ multipass_build_dir }}/{{ multipass_keypair_type }}"
-    type: "{{ multipass_keypair_type }}"
-  register: keypair_result
-
 - name: Write cloud-init template
   vars:
     multipass_vm_pub_key: "{{ keypair_result.public_key }}"

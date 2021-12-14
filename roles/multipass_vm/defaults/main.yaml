@@ -1,5 +1,4 @@
 multipass_build_dir: build
-multipass_keypair_type: ed25519
 multipass_vm_name: keystone-vm
 multipass_vm_release: bionic
 multipass_vm_username: keystone

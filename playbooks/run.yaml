@@ -1,4 +1,25 @@
 ---
+- name: "Prepare common configuration"
+  hosts: host
+  tasks:
+    - name: Set common facts
+      set_fact:
+        build_dir: build
+        vm_name: keystone-vm
+        vm_username: keystone
+        vm_release: bionic
+    - name: Create keypair dir
+      file:
+        path: "{{ build_dir }}"
+        state: directory
+    - name: Generate keypair
+      vars:
+        keypair_type: ed25519
+      community.crypto.openssh_keypair:
+        path: "{{ build_dir }}/id_{{ keypair_type }}"
+        type: "{{ keypair_type }}"
+      register: keypair_result
+
 - import_playbook: multipass.yaml
   when: provider == "multipass"
 

@@ -1,7 +1,10 @@
 - name: "Setup VM with multipass"
   hosts: host
   vars:
-    multipass_vm_username: keystone
+    multipass_vm_username: "{{ vm_username }}"
+    multipass_build_dir: "{{ build_dir }}"
+    multipass_vm_name: "{{ vm_name }}"
+    multipass_vm_release: "{{ vm_release }}"
   roles:
     - multipass_vm
   tasks:

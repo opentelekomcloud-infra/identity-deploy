@@ -1,0 +1,17 @@
+- name: "Setup VM with multipass"
+  hosts: host
+  vars:
+    multipass_vm_username: keystone
+  roles:
+    - multipass_vm
+  tasks:
+    - name: "Set guest address"
+      add_host:
+        name: guest
+        groups:
+          - keystone_all
+        ansible_host: "{{ multipass_vm_address }}"
+        ansible_user: "{{ multipass_vm_username }}"
+        ansible_ssh_private_key_file: "{{ playbook_dir }}/{{ multipass_vm_private_key }}"
+        vm_address: "{{ multipass_vm_address }}"
+      changed_when: no

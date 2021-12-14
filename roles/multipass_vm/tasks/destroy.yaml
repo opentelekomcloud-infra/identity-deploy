@@ -1,0 +1,6 @@
+---
+- name: Delete existing VM if cloud-init changed
+  shell: "multipass delete {{ multipass_vm_name }} && multipass purge"
+  failed_when: no
+  register: delete
+  changed_when: (not delete.stderr_lines) or (delete.stderr_lines[1] is not search(multipass_vm_name + '\" does not exist'))

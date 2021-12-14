@@ -1,0 +1,7 @@
+---
+- name: "Destroy Multipass VM"
+  hosts: host
+  vars:
+    state: absent
+  roles:
+    - multipass_vm

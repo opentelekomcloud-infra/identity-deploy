@@ -1,2 +1,8 @@
 ---
 provider: multipass
+
+vm_release: bionic
+build_dir: build
+vm_name: keystone-vm
+vm_public_key:
+vm_private_key_file:

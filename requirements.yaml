@@ -1,5 +1,4 @@
 collections:
-  - openstack.cloud
   - community.crypto
 roles:
   - rockandska.erlang

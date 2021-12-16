@@ -21,6 +21,9 @@
 - import_playbook: create-multipass.yaml
   when: provider == "multipass"
 
+- import_playbook: create-otc.yaml
+  when: provider == "otc"
+
 - name: "Wait for ssh to be available"
   hosts: guest
   gather_facts: no

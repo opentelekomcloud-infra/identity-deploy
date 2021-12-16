@@ -1,0 +1,6 @@
+---
+- hosts: host
+  vars:
+    state: absent
+  roles:
+    - opentelekomcloud_vm

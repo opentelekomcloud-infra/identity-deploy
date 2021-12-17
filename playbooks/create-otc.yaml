@@ -1,0 +1,20 @@
+---
+- name: "Prepare OTC infrastructure"
+  hosts: host
+  vars:
+    otc_build_dir: "{{ build_dir }}"
+    otc_server_name: "{{ vm_name }}"
+    otc_public_key: "{{ vm_public_key }}"
+    otc_ubuntu_release: "{{ vm_release }}"
+  roles:
+    - opentelekomcloud_vm
+  tasks:
+    - add_host:
+        name: guest
+        groups:
+          - keystone_all
+        ansible_host: "{{ otc_floating_ip }}"
+        ansible_user: "{{ vm_username }}"
+        ansible_ssh_private_key_file: "{{ vm_private_key_file }}"
+        vm_address: "{{ otc_floating_ip }}"
+      changed_when: no

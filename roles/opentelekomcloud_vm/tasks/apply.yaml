@@ -1,0 +1,21 @@
+- block:
+  - vars:
+      release_version: "{{ _release_version_map[otc_ubuntu_release] }}"
+    set_fact:
+      otc_image: "Standard_Ubuntu_{{ release_version }}_latest"
+  - name: Generate var file
+    template:
+      src: "input.tfvar"
+      dest: "{{ _tf_var_file }}"
+
+- name: "Create infrastructure"
+  community.general.terraform:
+    force_init: true
+    project_path: "{{ role_path }}/terraform"
+    variables_files:
+      - "{{ _tf_var_file }}"
+  register: tf_output
+
+- name: Save floating IP
+  set_fact:
+    otc_floating_ip: "{{ tf_output.outputs.floating_ip.value }}"

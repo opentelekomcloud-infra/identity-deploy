@@ -1,3 +1,6 @@
 ---
 - import_playbook: destroy-multipass.yaml
   when: provider == "multipass"
+
+- import_playbook: destroy-otc.yaml
+  when: provider == "otc"

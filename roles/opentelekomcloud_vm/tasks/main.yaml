@@ -1,0 +1,5 @@
+- include_tasks: apply.yaml
+  when: state == "present"
+
+- include_tasks: destroy.yaml
+  when: state == "absent"

@@ -7,3 +7,8 @@ server_name = "{{ otc_server_name }}"
 sg_name = "{{ otc_sg_name }}"
 public_key = "{{ otc_public_key }}"
 flavor = "{{ otc_flavor }}"
+inbound_ports = [
+  22,
+  5000,
+  37358,
+]

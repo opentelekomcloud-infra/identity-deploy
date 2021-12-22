@@ -8,3 +8,5 @@ variable "server_name" {}
 variable "sg_name" {}
 variable "az" { default = "eu-de-01" }
 variable "public_key" {}
+variable "inbound_ports" { type = list(number) }
+

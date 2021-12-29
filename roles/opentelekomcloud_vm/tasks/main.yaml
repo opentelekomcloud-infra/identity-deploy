@@ -1,3 +1,13 @@
+- name: "Ensure host requirements"
+  block:
+    - name: "Copy host-requirements.txt"
+      copy:
+        src: "host-requirements.txt"
+        dest: "{{ host_requirements_dest }}"
+    - name: "Install requirements"
+      pip:
+        requirements: "{{ host_requirements_dest }}"
+
 - include_tasks: apply.yaml
   when: state == "present"
 

@@ -1,6 +1,8 @@
 collections:
   - community.crypto
-  - community.general
+  - openstack.cloud
+  - name: opentelekomcloud.cloud
+    version: ">=0.11.0"
 roles:
   - rockandska.erlang
   - geerlingguy.rabbitmq

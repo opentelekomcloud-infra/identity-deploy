@@ -1,0 +1,2 @@
+openstacksdk==0.61.0
+otcextensions>=0.24.6

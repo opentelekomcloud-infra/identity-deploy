@@ -1,7 +1,32 @@
-- name: "Destroy infrastructure"
-  community.general.terraform:
+- name: "Delete server"
+  openstack.cloud.server:
+    name: "{{ otc_server_name }}"
+    delete_fip: yes
+    terminate_volume: yes
     state: absent
-    force_init: true
-    project_path: "{{ role_path }}/terraform"
-    variables_files:
-      - "{{ _tf_var_file }}"
+
+- name: "Delete keypair"
+  openstack.cloud.keypair:
+    name: "{{ otc_keypair_name }}"
+    state: absent
+
+- name: "Delete security group"
+  openstack.cloud.security_group:
+    name: "{{ otc_sg_name }}"
+    state: absent
+
+- name: "Get VPC info"
+  opentelekomcloud.cloud.vpc:
+    name: "{{ otc_vpc_name }}"
+  register: _vpc
+
+- name: "Delete subnet"
+  opentelekomcloud.cloud.subnet:
+    vpc_id: "{{ _vpc.vpc.id }}"
+    name: "{{ otc_subnet_name }}"
+    state: absent
+
+- name: "Delete VPC"
+  opentelekomcloud.cloud.vpc:
+    name: "{{ otc_vpc_name }}"
+    state: absent

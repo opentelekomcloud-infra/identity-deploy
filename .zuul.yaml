@@ -1,10 +1,58 @@
 ---
+- semaphore:
+    name: identity-infrastructure-make
+    max: 1
+
+- job:
+    name: golang-make-functional-identity
+    parent: golang-make-functional
+    description: |
+      A job deploying OpenStack identity on a OTC VM for Go functional tests
+    vars:
+      provider: "otc"
+      vm_name: "keystone-go-make"
+      seed: "-go-make"
+    semaphores: identity-infrastructure-make
+    pre-run:
+      - playbooks/install-community-collection.yaml
+      - playbooks/install-ansible-requirements.yaml
+      - playbooks/create.yaml
+    post-run:
+      - playbooks/destroy.yaml
+
+- semaphore:
+    name: identity-infrastructure-tox
+    max: 1
+
+- job:
+    name: tox-functional-identity
+    parent: tox-functional
+    description: |
+      A job deploying OpenStack identity on a OTC VM for tox functional tests
+    vars:
+      provider: "otc"
+      vm_name: "keystone-tox"
+      seed: "-tox"
+    semaphores: identity-infrastructure-tox
+    pre-run:
+      - playbooks/install-community-collection.yaml
+      - playbooks/install-ansible-requirements.yaml
+      - playbooks/create.yaml
+    post-run:
+      - playbooks/destroy.yaml
+
 - project:
     merge-mode: squash-merge
     default-branch: main
     check:
       jobs:
         - otc-tox-linters
+    check-post:
+      jobs:
+        - tox-functional-identity
+        - golang-make-functional-identity
     gate:
       jobs:
         - otc-tox-linters
+        - tox-functional-identity
+        - golang-make-functional-identity

@@ -7,6 +7,8 @@ _release_version_map:
   bionic: "18.04"
   focal: "20.04"
 
+otc_seed: ""  # used to create multiple instances
+
 otc_server_name:
 otc_public_key:
 otc_dns_nameservers:
@@ -16,10 +18,10 @@ otc_cidr: "192.168.0.0/16"
 otc_gateway_ip: "192.168.0.1"
 otc_flavor: "s2.xlarge.4"
 otc_ubuntu_release: "bionic"
-otc_keypair_name: "keystone-kp"
-otc_vpc_name: "keystone-router"
-otc_subnet_name: "keystone-subnet"
-otc_sg_name: "keystone-sg"
+otc_keypair_name: "keystone-kp{{otc_seed}}"
+otc_vpc_name: "keystone-router{{otc_seed}}"
+otc_subnet_name: "keystone-subnet{{otc_seed}}"
+otc_sg_name: "keystone-sg{{otc_seed}}"
 otc_allowed_ports:
   - 22
   - 5000

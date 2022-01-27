@@ -38,7 +38,7 @@
     - set_fact:
         db_pwd: "{{ lookup('password', 'build/db_pwd chars=hexdigits', seed=inventory_hostname) }}"
         admin_pwd: "{{ lookup('password', 'build/admin_pwd', seed=inventory_hostname) }}"
-      no_log: true
+      no_log: yes
 
 - name: "Prepare to install"
   hosts: guest
@@ -126,7 +126,7 @@
     keystone_oslomsg_rpc_setup_host: guest
     keystone_oslomsg_notify_setup_host: guest
     keystone_service_setup_host: guest
-    oslomsg_rpc_policies: [ ]
+    oslomsg_rpc_policies: []
     keystone_admin_user_name: admin
     keystone_auth_admin_password: "{{ admin_pwd }}"
     login_project_name: "admin"

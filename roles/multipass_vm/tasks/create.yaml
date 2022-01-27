@@ -18,14 +18,20 @@
 
 - name: Check if VM needs to be created or re-created
   set_fact:
-    need_delete: "{{ cloud_init.changed and (multipass_list.stdout is search(multipass_vm_name)) }}"
-    need_create: "{{ cloud_init.changed or (multipass_list.stdout is not search(multipass_vm_name)) }}"
+    need_delete: >
+      {{ cloud_init.changed and (multipass_list.stdout is search(multipass_vm_name)) }}
+    need_create: >
+      {{ cloud_init.changed or (multipass_list.stdout is not search(multipass_vm_name)) }}
 
 - import_tasks: destroy.yaml
   when: need_delete
 
 - name: Create VM
-  shell: "multipass launch --name {{ multipass_vm_name }} --cloud-init {{ cloud_init.dest }} {{ multipass_vm_release }}"
+  shell: >
+    multipass launch
+    --name {{ multipass_vm_name }}
+    --cloud-init {{ cloud_init.dest }}
+    {{ multipass_vm_release }}
   when: need_create
 
 - name: Show instance details
@@ -34,5 +40,8 @@
   register: multipass_info
 
 - name: Save VM facts
+  vars:
+    re_ip_address: "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}"
   set_fact:
-    multipass_vm_address: "{{ multipass_info.stdout_lines[2] | regex_search('\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}') }}"
+    multipass_vm_address: >
+      {{ multipass_info.stdout_lines[2] | regex_search(re_ip_address) }}

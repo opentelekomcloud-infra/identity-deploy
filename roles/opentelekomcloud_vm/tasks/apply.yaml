@@ -1,7 +1,8 @@
+---
 - vars:
     release_version: "{{ _release_version_map[otc_ubuntu_release] }}"
   set_fact:
-    otc_image: "Standard_Ubuntu_{{ release_version }}_latest" 
+    otc_image: "Standard_Ubuntu_{{ release_version }}_latest"
 
 - name: "Create keypair"
   openstack.cloud.keypair:
@@ -64,7 +65,7 @@
     flavor: "{{ otc_flavor }}"
     key_name: "{{ otc_keypair_name }}"
     network: "{{ _subnet.subnet.neutron_network_id }}"
-    terminate_volume: true
+    terminate_volume: yes
 
 - name: "Create floating IP"
   openstack.cloud.floating_ip:

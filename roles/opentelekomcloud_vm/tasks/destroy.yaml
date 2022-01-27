@@ -1,3 +1,4 @@
+---
 - name: "Delete server"
   openstack.cloud.server:
     name: "{{ otc_server_name }}"

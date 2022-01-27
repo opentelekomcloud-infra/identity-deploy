@@ -1,0 +1,10 @@
+extends: default
+
+ignore: |
+  cloud-init.yaml
+
+rules:
+  line-length:
+    max: 100
+  truthy:
+    allowed-values: ['yes', 'no']

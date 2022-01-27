@@ -2,6 +2,7 @@
 - name: "Prepare OTC infrastructure"
   hosts: host
   vars:
+    otc_seed: "{{ seed | default('') }}"
     otc_build_dir: "{{ build_dir }}"
     otc_server_name: "{{ vm_name }}"
     otc_public_key: "{{ vm_public_key }}"

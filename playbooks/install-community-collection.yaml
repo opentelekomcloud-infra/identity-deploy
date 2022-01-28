@@ -1,6 +1,0 @@
----
-- name: "Install general.community collection"
-  hosts: host
-  tasks:
-    - shell: "ansible-galaxy install collection community.general"
-    - shell: "ansible-galaxy --version"

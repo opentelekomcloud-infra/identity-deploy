@@ -1,8 +1,0 @@
----
-- name: "Install required collections and roles"
-  hosts: host
-  tasks:
-    - name: "Install from requirements.yaml"
-      community.general.ansible_galaxy_install:
-        type: both
-        requirements_file: "../requirements.yaml"

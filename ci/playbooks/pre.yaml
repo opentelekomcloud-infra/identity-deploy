@@ -1,0 +1,19 @@
+---
+- name: "Run ansible from ansible"
+  hosts: all
+  tasks:
+    - name: "Install ansible"
+      pip:
+        name: ansible
+        version: "5.1.0"
+        state: present
+    - name: "Install requirements"
+      shell: >
+        ansible-galaxy
+        install
+        -r "{{ zuul.project.src_dir }}/requirements.yaml"
+    - name: "Run create playbook"
+      shell: >
+        ansible-playbook
+        -e "provider='{{ provider }}' vm_name='{{ vm_name }}' seed='{{seed}}'"
+        {{ zuul.project.src_dir }}/playbooks/create.yaml

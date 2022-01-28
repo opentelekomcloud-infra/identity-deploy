@@ -14,11 +14,9 @@
       seed: "-go-make"
     semaphores: identity-infrastructure-make
     pre-run:
-      - playbooks/install-community-collection.yaml
-      - playbooks/install-ansible-requirements.yaml
-      - playbooks/create.yaml
+      - ci/playbooks/pre.yaml
     post-run:
-      - playbooks/destroy.yaml
+      - ci/playbooks/post.yaml
 
 - semaphore:
     name: identity-infrastructure-tox
@@ -35,11 +33,9 @@
       seed: "-tox"
     semaphores: identity-infrastructure-tox
     pre-run:
-      - playbooks/install-community-collection.yaml
-      - playbooks/install-ansible-requirements.yaml
-      - playbooks/create.yaml
+      - ci/playbooks/pre.yaml
     post-run:
-      - playbooks/destroy.yaml
+      - ci/playbooks/post.yaml
 
 - project:
     merge-mode: squash-merge

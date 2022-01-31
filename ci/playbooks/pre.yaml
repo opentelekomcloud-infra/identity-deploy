@@ -8,12 +8,14 @@
         version: "5.1.0"
         state: present
     - name: "Install requirements"
+      chdir: "{{ zuul.project.src_dir }}"
       shell: >
         ansible-galaxy
         install
-        -r "{{ zuul.project.src_dir }}/requirements.yaml"
+        -r requirements.yaml
     - name: "Run create playbook"
+      chdir: "{{ zuul.project.src_dir }}"
       shell: >
         ansible-playbook
         -e "provider='{{ provider }}' vm_name='{{ vm_name }}' seed='{{seed}}'"
-        {{ zuul.project.src_dir }}/playbooks/create.yaml
+        playbooks/create.yaml

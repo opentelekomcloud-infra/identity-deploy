@@ -14,7 +14,7 @@ roles:
   - src: git+https://opendev.org/openstack/ansible-role-python_venv_build
     name: python_venv_build
   - src: git+https://opendev.org/openstack/ansible-config_template
-    name: config_template
+    name: openstack.config_template
   - src: git+https://opendev.org/openstack/ansible-role-systemd_service
     name: systemd_service
     version: fc698fb11a

@@ -12,6 +12,7 @@
       provider: "otc"
       vm_name: "keystone-go-make"
       seed: "-go-make"
+      repo_tmp: "/tmp/identity-deploy"
     semaphores: identity-infrastructure-make
     pre-run:
       - ci/playbooks/pre.yaml
@@ -31,6 +32,7 @@
       provider: "otc"
       vm_name: "keystone-tox"
       seed: "-tox"
+      repo_tmp: "/tmp/identity-deploy"
     semaphores: identity-infrastructure-tox
     pre-run:
       - ci/playbooks/pre.yaml

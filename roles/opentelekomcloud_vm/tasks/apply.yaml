@@ -4,6 +4,13 @@
   set_fact:
     otc_image: "Standard_Ubuntu_{{ release_version }}_latest"
 
+- name: "Remove keypair if exists"
+  openstack.cloud.keypair:
+    state: absent
+    name: "{{ otc_keypair_name }}"
+    public_key: "{{ otc_public_key }}"
+  register: _keypair
+
 - name: "Create keypair"
   openstack.cloud.keypair:
     name: "{{ otc_keypair_name }}"

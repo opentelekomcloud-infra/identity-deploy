@@ -4,7 +4,7 @@
   tasks:
     - name: "Run destroy playbook"
       args:
-        chdir: "{{ zuul.project.src_dir }}"
+        chdir: "{{ repo_tmp }}"
       shell: >
         ansible-playbook
         -e "provider='{{ provider }}' vm_name='{{ vm_name }}' seed='{{seed}}'"

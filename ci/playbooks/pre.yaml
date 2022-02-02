@@ -18,7 +18,6 @@
         repo: "{{ id_repo }}"
         dest: "{{ repo_tmp }}"
         depth: 1
-        version: "zuul-identity"
     - name: "Install requirements"
       args:
         chdir: "{{ repo_tmp }}"

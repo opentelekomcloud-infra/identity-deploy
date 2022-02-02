@@ -104,7 +104,7 @@
     - name: "Copy clouds.yaml back"
       fetch:
         src: "~/.config/openstack/clouds.yaml"
-        dest: "/tmp/clouds.yaml"
+        dest: "{{ result_clouds | default('/tmp/clouds.yaml') }}"
         flat: yes
         fail_on_missing: yes
 

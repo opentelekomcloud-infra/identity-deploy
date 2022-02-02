@@ -13,10 +13,14 @@
       vm_name: "keystone-go-make"
       seed: "-go-make"
       repo_tmp: "/tmp/identity-deploy"
+      result_clouds: "/tmp/clouds.yaml"
+      make_env:
+        OS_CLOUD: "default"
+        OS_CLIENT_CONFIG_FILE: "{{ result_clouds }}"
     semaphores: identity-infrastructure-make
     pre-run:
       - ci/playbooks/pre.yaml
-    post-run:
+    cleanup-run:
       - ci/playbooks/post.yaml
 
 - semaphore:
@@ -33,10 +37,14 @@
       vm_name: "keystone-tox"
       seed: "-tox"
       repo_tmp: "/tmp/identity-deploy"
+      result_clouds: "/tmp/clouds.yaml"
+      tox_environment:
+        OS_CLOUD: "default"
+        OS_CLIENT_CONFIG_FILE: "{{ result_clouds }}"
     semaphores: identity-infrastructure-tox
     pre-run:
       - ci/playbooks/pre.yaml
-    post-run:
+    cleanup-run:
       - ci/playbooks/post.yaml
 
 - project:

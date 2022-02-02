@@ -34,12 +34,12 @@
         chdir: "{{ repo_tmp }}"
       shell: >
         ansible-playbook
-        -e "provider='{{ provider }}' vm_name='{{ vm_name }}' seed='{{seed}}'"
+        -e "provider='{{ provider }}' vm_name='{{ vm_name }}' seed='{{seed}}' result_clouds='{{ result_clouds }}'"
         playbooks/create.yaml
     # return URLs and credentials
     - name: "Read clouds.yaml"
       slurp:
-        src: "/tmp/clouds.yaml"
+        src: "{{ result_clouds }}"
       register: clouds_yaml
     - name: "Set iam_cloud fact"
       vars:

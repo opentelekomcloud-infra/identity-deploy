@@ -1,4 +1,4 @@
 SHELL=/bin/bash
 
 acceptance:
-	echo OK
+	@bash ci/check_vars.sh

@@ -13,9 +13,6 @@
       file:
         path: "{{ repo_tmp }}"
         state: directory
-    - name: "Save git path"
-      set_fact:
-        git_path:
     - name: "Clone 'identity-deploy' repository"
       git:
         repo: "{{ id_repo }}"

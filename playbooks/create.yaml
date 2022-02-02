@@ -101,6 +101,12 @@
       template:
         src: "clouds.yaml"
         dest: "~/.config/openstack/clouds.yaml"
+    - name: "Copy clouds.yaml back"
+      fetch:
+        src: "~/.config/openstack/clouds.yaml"
+        dest: "{{ result_clouds | default('/tmp/clouds.yaml') }}"
+        flat: yes
+        fail_on_missing: yes
 
 - name: "Install RabbitMQ"
   hosts: guest

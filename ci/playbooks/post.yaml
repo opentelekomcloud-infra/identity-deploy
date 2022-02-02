@@ -1,0 +1,11 @@
+---
+- name: "Run ansible from ansible"
+  hosts: all
+  tasks:
+    - name: "Run destroy playbook"
+      args:
+        chdir: "{{ repo_tmp }}"
+      shell: >
+        ansible-playbook
+        -e "provider='{{ provider }}' vm_name='{{ vm_name }}' seed='{{seed}}'"
+        playbooks/destroy.yaml

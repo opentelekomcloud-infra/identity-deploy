@@ -1,0 +1,60 @@
+---
+- name: "Run ansible from ansible"
+  hosts: all
+  vars:
+    id_repo: "https://github.com/opentelekomcloud-infra/identity-deploy"
+  tasks:
+    - name: "Install ansible"
+      pip:
+        name: ansible
+        version: "5.1.0"
+        state: present
+    - name: "Ensure target dir exists"
+      file:
+        path: "{{ repo_tmp }}"
+        state: directory
+    - name: "Clone 'identity-deploy' repository"
+      git:
+        repo: "{{ id_repo }}"
+        dest: "{{ repo_tmp }}"
+        depth: 1
+        version: "zuul-identity"
+    - name: "Install requirements"
+      args:
+        chdir: "{{ repo_tmp }}"
+      shell: >
+        ansible-galaxy
+        install
+        -r requirements.yaml
+    - name: "Run create playbook"
+      args:
+        chdir: "{{ repo_tmp }}"
+      shell: >
+        ansible-playbook
+        -e "provider='{{ provider }}' vm_name='{{ vm_name }}' seed='{{seed}}' result_clouds='{{ result_clouds }}'"
+        playbooks/create.yaml
+    # return URLs and credentials
+    - name: "Read clouds.yaml"
+      slurp:
+        src: "{{ result_clouds }}"
+      register: clouds_yaml
+    - name: "Set iam_cloud fact"
+      vars:
+        clouds: "{{ clouds_yaml.content | b64decode | from_yaml }}"
+      set_fact:
+        iam_cloud: "{{ clouds['clouds']['default'] }}"
+    - name: "Log one-time identity cloud config"
+      debug:
+        var: iam_cloud
+    - name: "Return values to the zuul"
+      vars:
+        auth: "{{ iam_cloud['auth'] }}"
+      zuul_return:
+        data:
+          iam_region: "{{ iam_cloud['region'] }}"
+          iam_auth_url: "{{ auth['auth_url'] }}"
+          iam_admin_username: "{{ auth['username'] }}"
+          iam_project_name: "{{ auth['project_name'] }}"
+          iam_domain_name: "{{ auth['domain_name'] }}"
+        secret_data:
+          iam_admin_password: "{{ auth['password'] }}"

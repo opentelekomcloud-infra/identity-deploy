@@ -1,0 +1,28 @@
+- project:
+    merge-mode: squash-merge
+    default-branch: main
+    check:
+      jobs:
+        - otc-tox-linters
+    check-post:
+      jobs:
+        - tox-functional-identity
+        - tox-functional-identity-xena
+        - tox-functional-identity-wallaby
+        - tox-functional-identity-victoria
+        - golang-make-functional-identity
+        - golang-make-functional-identity-xena
+        - golang-make-functional-identity-wallaby
+        - golang-make-functional-identity-victoria
+
+    gate:
+      jobs:
+        - otc-tox-linters
+        - tox-functional-identity
+        - tox-functional-identity-xena
+        - tox-functional-identity-wallaby
+        - tox-functional-identity-victoria
+        - golang-make-functional-identity
+        - golang-make-functional-identity-xena
+        - golang-make-functional-identity-wallaby
+        - golang-make-functional-identity-victoria

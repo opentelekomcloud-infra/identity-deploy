@@ -1,0 +1,42 @@
+---
+- semaphore:
+    name: identity-infrastructure-tox
+    max: 1
+
+- job:
+    name: tox-functional-identity
+    parent: tox-functional
+    description: |
+      A job deploying OpenStack identity on a OTC VM for tox functional tests
+    vars:
+      provider: "otc"
+      vm_name: "keystone-tox"
+      seed: "-tox"
+      repo_tmp: "/tmp/identity-deploy"
+      result_clouds: "/tmp/clouds.yaml"
+      tox_environment:
+        OS_CLOUD: "default"
+        OS_CLIENT_CONFIG_FILE: "{{ result_clouds }}"
+    semaphores: identity-infrastructure-tox
+    pre-run:
+      - ci/playbooks/pre.yaml
+    cleanup-run:
+      - ci/playbooks/post.yaml
+
+- job:
+    name: tox-functional-identity-xena
+    parent: tox-functional-identity
+    vars:
+      keystone_branch: "stable/xena"
+
+- job:
+    name: tox-functional-identity-wallaby
+    parent: tox-functional-identity
+    vars:
+      keystone_branch: "stable/wallaby"
+
+- job:
+    name: tox-functional-identity-victoria
+    parent: tox-functional-identity
+    vars:
+      keystone_branch: "stable/victoria"

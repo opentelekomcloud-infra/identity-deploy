@@ -30,7 +30,11 @@
         chdir: "{{ repo_tmp }}"
       shell: >
         ansible-playbook
-        -e "provider='{{ provider }}' vm_name='{{ vm_name }}' seed='{{seed}}' result_clouds='{{ result_clouds }}'"
+        -e "provider='{{ provider }}'
+        vm_name='{{ vm_name }}'
+        seed='{{seed}}'
+        keystone_git_install_branch='{{ keystone_branch | default('master') }}'
+        result_clouds='{{ result_clouds }}'"
         playbooks/create.yaml
     # return URLs and credentials
     - name: "Read clouds.yaml"

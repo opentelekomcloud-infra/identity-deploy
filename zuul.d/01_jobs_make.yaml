@@ -1,0 +1,42 @@
+---
+- semaphore:
+    name: identity-infrastructure-make
+    max: 1
+
+- job:
+    name: golang-make-functional-identity
+    parent: golang-make-functional
+    description: |
+      A job deploying OpenStack identity on a OTC VM for Go functional tests
+    vars:
+      provider: "otc"
+      vm_name: "keystone-go-make"
+      seed: "-go-make"
+      repo_tmp: "/tmp/identity-deploy"
+      result_clouds: "/tmp/clouds.yaml"
+      make_env:
+        OS_CLOUD: "default"
+        OS_CLIENT_CONFIG_FILE: "{{ result_clouds }}"
+    semaphores: identity-infrastructure-make
+    pre-run:
+      - ci/playbooks/pre.yaml
+    cleanup-run:
+      - ci/playbooks/post.yaml
+
+- job:
+    name: golang-make-functional-identity-xena
+    parent: golang-make-functional-identity
+    vars:
+      keystone_branch: "stable/xena"
+
+- job:
+    name: golang-make-functional-identity-wallaby
+    parent: golang-make-functional-identity
+    vars:
+      keystone_branch: "stable/wallaby"
+
+- job:
+    name: golang-make-functional-identity-victoria
+    parent: golang-make-functional-identity
+    vars:
+      keystone_branch: "stable/victoria"

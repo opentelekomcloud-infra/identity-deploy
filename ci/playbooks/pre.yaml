@@ -49,6 +49,7 @@
     - name: "Log one-time identity cloud config"
       debug:
         var: iam_cloud
+        verbosity: 3
     - name: "Return values to the zuul"
       vars:
         auth: "{{ iam_cloud['auth'] }}"

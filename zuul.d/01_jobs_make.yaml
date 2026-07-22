@@ -20,8 +20,9 @@
     semaphores: identity-infrastructure-make
     pre-run:
       - ci/playbooks/pre.yaml
-    cleanup-run:
-      - ci/playbooks/post.yaml
+    post-run:
+      - name: ci/playbooks/post.yaml
+        cleanup: true
 
 - job:
     name: golang-make-functional-identity-xena
